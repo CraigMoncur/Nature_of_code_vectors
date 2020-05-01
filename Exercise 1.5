@@ -1,0 +1,62 @@
+class Runner {
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+ 
+  float topspeed;
+  float dim; //width and height of the runner
+ 
+  Runner() {
+    location=new PVector(0+(dim/2), height-(dim/2);
+    velocity=new PVector(0, 0);
+    acceleration=new PVector(0, 0);
+    topspeed=2;
+    dim=16;
+  }
+ 
+  void display() {
+    stroke(0);
+    fill(100);
+    ellipse(location.x, location.y, dim, dim);
+  }
+
+  void step() {
+    if (keyPressed) {
+      if (keyCode==UP)
+        acceleration.add(new PVector(0.001, 0));
+      else if (keyCode==DOWN)
+        if (velocity.x<=0)
+          runnerStop();
+        else acceleration.sub(new PVector(0.005, 0));
+    }
+ 
+    velocity.add(acceleration);
+    location.add(velocity);
+    velocity.limit(topspeed);
+  }
+ 
+  void checkEdges() {
+    if (location.x+(dim/2)>=width) 
+      location.x=0+(dim/2);
+  }
+ 
+  void runnerStop() {
+    acceleration=new PVector(0, 0);
+    velocity=new PVector(0, 0);
+  }
+}
+ 
+Runner r;
+ 
+void setup() {
+  size(640, 320);
+ 
+  r=new Runner();
+}
+ 
+void draw() {
+  background(255);
+  r.step();
+  r.checkEdges();
+  r.display();
+}
