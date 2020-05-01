@@ -1,0 +1,32 @@
+class Walker{
+	PVector location;
+	
+	Walker(){
+		location = new PVector(width/2,height/2);
+	}
+	void render(){
+		stroke(0);
+		fill(175);
+		rectMode(CENTER);
+		rect(location.x,location.y,16,16);
+	}
+	void step(){
+		PVector velocity = new PVector(random(-2,2),random(-2,2));
+		location.add(velocity);
+		
+		location.x = constrain(location.x,0,width-1)
+		location.y = constrain(location.y,0,height-1)
+	}
+}
+
+Walker w;
+void setup(){
+	size(400,400);
+	frameRate(30);
+	w = new Walker();
+}
+void draw(){
+	background(255);
+	w.step();
+	w.render();
+}
