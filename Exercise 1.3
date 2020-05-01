@@ -1,0 +1,46 @@
+PVector location = new PVector(0,0,0);
+PVector velocity = new PVector(3,2,1);
+
+void setup(){
+  size(400,400,P3D);
+}
+
+void draw(){
+  background(255);
+  
+  pushMatrix();
+  
+  translate(210, 175, -200);
+  
+  rotateX(-PI/4);
+  rotateY(PI/4 + .25);
+  rotateZ(PI/8);
+  
+  noFill();
+  stroke(0);
+  box(300);
+  
+  translate(location.x, location.y, location.z);
+  location.add(velocity);
+  
+  if(location.x > 150 - 20 || location.x < -150 + 20){
+    
+    velocity.x = velocity.x * -1;
+  
+  } else if(location.y > 150 - 20 || location.y < -150 + 20){
+    
+    velocity.y = velocity.y * -1;
+  
+  } else if(location.z > 150 - 20 || location.z < -150 + 20){
+    
+    velocity.z = velocity.z * -1;
+  }
+  
+  //draw ball, and lights for definition
+  fill(175);
+  noStroke();
+  lights();
+  sphere(20);
+  
+  popMatrix();
+}
