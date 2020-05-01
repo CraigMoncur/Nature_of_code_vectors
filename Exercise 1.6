@@ -1,0 +1,79 @@
+class Mover
+{
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  float topspeed;
+  float diameter;
+
+  float tx = 0;
+  float ty = 10000;
+
+  Mover(float _x, float _y)
+  {
+    location = new PVector(_x, _y);
+    velocity = new PVector(0, 0);
+    
+    topspeed = 10;
+    diameter = 16;
+  }
+
+  void update()
+  {
+    acceleration = new PVector(noise(tx), noise(ty));
+    velocity.add(acceleration);
+    location.add(velocity);
+    velocity.limit(0.2);
+    tx += 0.001;
+    ty += 0.001;
+  }
+
+  void checkEdge()
+  {
+    if (location.x > width)
+    {
+      location.x = 0;
+    } else if (location.x < 0)
+    {
+      location.x = width;
+    }
+
+    if (location.y > height)
+    {
+      location.y = 0;
+    } else if (location.y < 0)
+    {
+      location.y = height;
+    }
+  }
+
+  void display()
+  {
+    stroke(0);
+    fill(175);
+    ellipse(location.x, location.y, diameter, diameter);
+  }
+}
+
+
+Mover[] movers = new Mover[1]; 
+
+void setup()
+{
+  size(500, 500);
+  for (int i = 0; i < movers.length; i++)
+  {
+    movers[i] = new Mover(random(width/2), random(height/2));  
+  }
+}
+
+void draw()
+{
+  background(255);
+  for (int i = 0; i < movers.length; i++)
+  {
+    movers[i].update();
+    movers[i].checkEdge();
+    movers[i].display();
+  }
+}
